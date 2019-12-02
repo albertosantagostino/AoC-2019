@@ -18,7 +18,7 @@ def main():
     out = 0
     for el in lineList:
         out = out + compute_needed_fuel(el)
-    print(f"The solution of the first part is {out}")
+    print(f"Solution (part 2): {out}")
 
     # Part 2
     out = 0
@@ -32,7 +32,7 @@ def main():
         for el2 in fuel:
             out = out + el2
 
-    print(f"The solution of the second part is {out}")
+    print(f"Solution (part 1): {out}")
     return
 
 if __name__ == "__main__":

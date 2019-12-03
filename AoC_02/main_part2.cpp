@@ -19,28 +19,27 @@ int main()
     Pfile.open("input.txt");
     LoadFromFile(Pfile, program);
 
-    for(int noun = 0; noun < 100; noun++)
-        for(int verb = 0; verb < 100; verb++)
-            if(!found)
+    for(int noun = 0; noun < 100 && !found; noun++)
+        for(int verb = 0; verb < 100 && !found; verb++)
+        {
+            auto seed = std::make_pair(noun, verb);
+            SetProgram(program, modified_program, seed, pos, end);
+            std::cout << "Testing with " << seed.first << "," << seed.second;
+
+            // Run Intcode program
+            do
+                ExecuteStep(modified_program, pos, end);
+            while(!end);
+
+            // Check outcome
+            int out = modified_program[0];
+            std::cout << "... out: " << out << std::endl;
+            if(out == target_value)
             {
-                auto seed = std::make_pair(noun, verb);
-                SetProgram(program, modified_program, seed, pos, end);
-                std::cout << "Testing with " << seed.first << "," << seed.second;
-
-                // Run Intcode program
-                do
-                    ExecuteStep(modified_program, pos, end);
-                while(!end);
-
-                // Check outcome
-                int out = modified_program[0];
-                std::cout << "... out: " << out << std::endl;
-                if(out == target_value)
-                {
-                    found = true;
-                    correct_seed = seed;
-                }
+                found = true;
+                correct_seed = seed;
             }
+        }
 
     if(found)
     {

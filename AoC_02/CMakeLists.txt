@@ -6,7 +6,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(BIN_TARGET ${CMAKE_PROJECT_NAME}_bin)
 
 # Add include dir
-include_directories(include)
+include_directories(../common/include/)
 
 # Add bin targets
 add_executable(${BIN_TARGET}_1 main_part1.cpp)

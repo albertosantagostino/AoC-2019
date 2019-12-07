@@ -1,7 +1,7 @@
 /// https://adventofcode.com/2019/day/2 (part 1)
 /// @author Alberto Santagostino
 
-#include "utils.h"
+#include "IntCode_utils.h"
 
 int main()
 {
@@ -15,13 +15,13 @@ int main()
     auto code = std::make_pair(12, 2);
 
     Pfile.open("input.txt");
-    LoadFromFile(Pfile, program);
-    SetProgram(program, modified_program, code, pos, end);
+    IntCode::LoadFromFile(Pfile, program);
+    IntCode::SetProgram(program, modified_program, code, pos, end);
 
     // Run Intcode program
     do
     {
-        ExecuteStep(modified_program, pos, end);
+        IntCode::ExecuteStep(modified_program, pos, end);
     } while(!end);
 
     std::cout << "Solution (part 1): " << modified_program[0] << std::endl;

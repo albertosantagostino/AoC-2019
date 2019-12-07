@@ -1,7 +1,7 @@
 /// https://adventofcode.com/2019/day/2 (part 2)
 /// @author Alberto Santagostino
 
-#include "utils.h"
+#include "IntCode_utils.h"
 
 int main()
 {
@@ -17,18 +17,18 @@ int main()
     const int target_value = 19690720;
 
     Pfile.open("input.txt");
-    LoadFromFile(Pfile, program);
+    IntCode::LoadFromFile(Pfile, program);
 
     for(int noun = 0; noun < 100 && !found; noun++)
         for(int verb = 0; verb < 100 && !found; verb++)
         {
             auto seed = std::make_pair(noun, verb);
-            SetProgram(program, modified_program, seed, pos, end);
+            IntCode::SetProgram(program, modified_program, seed, pos, end);
             std::cout << "Testing with " << seed.first << "," << seed.second;
 
             // Run Intcode program
             do
-                ExecuteStep(modified_program, pos, end);
+                IntCode::ExecuteStep(modified_program, pos, end);
             while(!end);
 
             // Check outcome

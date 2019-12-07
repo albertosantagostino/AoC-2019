@@ -10,6 +10,9 @@
 #include <string>
 #include <vector>
 
+namespace IntCode
+{
+
 inline void LoadFromFile(std::ifstream& file, std::vector<int>& vec)
 {
     std::string str;
@@ -60,5 +63,7 @@ inline void ExecuteStep(std::vector<int>& vec, std::size_t& pos, bool& endofprog
     vec[std::size_t(vec[pos + 3])] = Compute(vec[pos], in1, in2);
     pos += 4;
 }
+
+}  // namespace IntCode
 
 #endif  // UTILS_H

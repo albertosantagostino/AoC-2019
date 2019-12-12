@@ -1,39 +1,44 @@
 /// https://adventofcode.com/2019/day/2 (part 2)
 /// @author Alberto Santagostino
 
-#include "IntCode_utils.h"
+#include "IntCodeMachine.h"
+#include "utils.h"
 
 int main()
 {
     std::ifstream Pfile;
-    std::vector<int> program;
-    std::vector<int> modified_program;
-    std::size_t pos{0};
+    Pfile.open("input.txt");
     std::pair<int, int> correct_seed;
-    bool end{false};
-    bool found{false};
 
     // Set target output
     const int target_value = 19690720;
 
-    Pfile.open("input.txt");
-    IntCode::LoadFromFile(Pfile, program);
+    bool end{false};
+    bool found{false};
+
+    auto machine = new IntCodeMachine;
+    machine->LoadProgramFromFile(Pfile);
+    auto original_program = machine->GetProgram();
 
     for(int noun = 0; noun < 100 && !found; noun++)
         for(int verb = 0; verb < 100 && !found; verb++)
         {
             auto seed = std::make_pair(noun, verb);
-            IntCode::SetProgram(program, modified_program, seed, pos, end);
+
+            machine->SetProgram(original_program);
+            machine->SetProgramNounVerb(seed);
+
             std::cout << "Testing with " << seed.first << "," << seed.second;
 
             // Run Intcode program
             do
-                IntCode::ExecuteStep(modified_program, pos, end);
-            while(!end);
+            {
+                end = machine->StepProgram();
+            } while(!end);
 
             // Check outcome
-            int out = modified_program[0];
-            std::cout << "... out: " << out << std::endl;
+            int out = machine->GetProgram()[0];
+            std::cout << ". First value: " << out << std::endl;
             if(out == target_value)
             {
                 found = true;

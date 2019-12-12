@@ -1,30 +1,27 @@
 /// https://adventofcode.com/2019/day/2 (part 1)
 /// @author Alberto Santagostino
 
-#include "IntCode_utils.h"
+#include "IntCodeMachine.h"
+#include "utils.h"
 
 int main()
 {
     std::ifstream Pfile;
-    std::vector<int> program;
-    std::vector<int> modified_program;
-    std::size_t pos{0};
+    Pfile.open("input.txt");
     bool end{false};
 
-    // Set code 1202
+    auto machine = new IntCodeMachine;
     auto code = std::make_pair(12, 2);
-
-    Pfile.open("input.txt");
-    IntCode::LoadFromFile(Pfile, program);
-    IntCode::SetProgram(program, modified_program, code, pos, end);
+    machine->LoadProgramFromFile(Pfile);
+    machine->SetProgramNounVerb(code);
 
     // Run Intcode program
     do
     {
-        IntCode::ExecuteStep(modified_program, pos, end);
+        end = machine->StepProgram();
     } while(!end);
 
-    std::cout << "Solution (part 1): " << modified_program[0] << std::endl;
+    std::cout << "Solution (part 1): " << machine->GetProgram()[0] << std::endl;
 
     return EXIT_SUCCESS;
 }

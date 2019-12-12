@@ -1,0 +1,21 @@
+# VScode
+**.vscode/
+
+# Binaries
+*.o
+*_bin*
+
+# CMake & Make
+**/CMakeCache.txt
+**/Makefile
+**/*.cmake
+**CMakeFiles/
+
+# Octave
+**/*octave-workspace*
+
+# Ruby
+**/*ruby_stub*
+
+# Locks
+**/*.lock
